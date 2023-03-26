@@ -6,6 +6,7 @@ void main() {
   runApp(MaterialApp(
     title: 'Solo',
     home: ImageScreen(),
+    debugShowCheckedModeBanner: false,
   ));
 }
 
