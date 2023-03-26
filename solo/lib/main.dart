@@ -62,7 +62,7 @@ class _ImageScreenState extends State<ImageScreen> {
             ),
           ),
           child: Align(
-            alignment: Alignment.bottomRight,
+            alignment: Alignment.bottomCenter,
             child: Padding(
               padding: EdgeInsets.all(20.0),
               child: FloatingActionButton(

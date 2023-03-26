@@ -20,6 +20,7 @@ class _AttractionsScreenState extends State<AttractionsScreen> {
     'Gateway Of India Mumbai',
     'Marine Drive',
   ];
+  
   final Set<int> _selectedImages = {};
   final int _maxSelectedImages = 4;
   List<String> selectedLabels =
