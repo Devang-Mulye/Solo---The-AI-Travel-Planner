@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'input_de.dart';
 
-
 void main() {
   runApp(MaterialApp(
     title: 'Solo',
@@ -17,7 +16,11 @@ class ImageScreen extends StatefulWidget {
 
 class _ImageScreenState extends State<ImageScreen> {
   int _currentIndex = 0;
-  final List<String> _images = [    'Resources/Img1.jpg',    'Resources/Img2.jpg',    'Resources/Img3.jpg',  ];
+  final List<String> _images = [
+    'Resources/Img1.jpg',
+    'Resources/Img2.jpg',
+    'Resources/Img3.jpg',
+  ];
 
   Timer? _timer;
 

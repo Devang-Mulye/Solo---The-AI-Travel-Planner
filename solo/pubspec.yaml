@@ -65,6 +65,11 @@ flutter:
     - Resources/Img1.jpg
     - Resources/Img2.jpg
     - Resources/Img3.jpg
+    - Resources/back_input.jpg
+    - Resources/Chhatrapati-Shivaji-Terminus.jpg
+    - Resources/Elephanta-caves.jpg
+    - Resources/Gateway_of_india.jpg
+    - Resources/Marine-Drive.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -8,39 +8,40 @@ class AttractionsScreen extends StatefulWidget {
 
 class _AttractionsScreenState extends State<AttractionsScreen> {
   final List<String> imageList = [
-    'https://picsum.photos/200/300?random=1',
-    'https://picsum.photos/200/300?random=2',
-    'https://picsum.photos/200/300?random=3',
-    'https://picsum.photos/200/300?random=4',
-    'https://picsum.photos/200/300?random=5',
-    'https://picsum.photos/200/300?random=6',
-    'https://picsum.photos/200/300?random=7',
-    'https://picsum.photos/200/300?random=8',
-    'https://picsum.photos/200/300?random=9',
-    'https://picsum.photos/200/300?random=10',
-    'https://picsum.photos/200/300?random=11',
-    'https://picsum.photos/200/300?random=12',
-    'https://picsum.photos/200/300?random=13',
-    'https://picsum.photos/200/300?random=14',
-    'https://picsum.photos/200/300?random=15',
-    'https://picsum.photos/200/300?random=16',
+    'Resources/Chhatrapati-Shivaji-Terminus.jpg',
+    'Resources/Elephanta-caves.jpg',
+    'Resources/Gateway_of_India.jpg',
+    'Resources/Marine-Drive.jpg',
+  ];
+
+  final List<String> imageLabels = [
+    'Chhatrapati Shivaji Maharaj Terminus',
+    'Elephanta Caves',
+    'Gateway Of India Mumbai',
+    'Marine Drive',
   ];
   final Set<int> _selectedImages = {};
-  final int _maxSelectedImages = 6;
+  final int _maxSelectedImages = 4;
+  List<String> selectedLabels =
+      []; // Add this line to initialize selectedLabels
 
   void _selectImage(int index) {
     setState(() {
       if (_selectedImages.contains(index)) {
         _selectedImages.remove(index);
+        selectedLabels
+            .remove(imageLabels[index]); // remove label from selectedLabels
       } else if (_selectedImages.length < _maxSelectedImages) {
         _selectedImages.add(index);
+        selectedLabels.add(imageLabels[index]); // add label to selectedLabels
       }
     });
   }
 
   void _navigateToNextPage() {
     Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => DaySelectionScreen()),
+      MaterialPageRoute(
+          builder: (_) => DaySelectionScreen(selectedLabels: selectedLabels)),
     );
   }
 
@@ -72,7 +73,7 @@ class _AttractionsScreenState extends State<AttractionsScreen> {
                 AnimatedOpacity(
                   duration: const Duration(milliseconds: 300),
                   opacity: isSelected ? 0.5 : 1.0,
-                  child: Image.network(
+                  child: Image.asset(
                     imageList[index],
                     height: 150,
                     width: 150,
@@ -80,7 +81,7 @@ class _AttractionsScreenState extends State<AttractionsScreen> {
                   ),
                 ),
                 if (isSelected)
-                  Positioned.fill(
+                  const Positioned.fill(
                     child: Icon(Icons.check, color: Colors.blue),
                   ),
               ],
