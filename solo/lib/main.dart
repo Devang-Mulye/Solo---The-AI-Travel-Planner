@@ -28,7 +28,7 @@ class _ImageScreenState extends State<ImageScreen> {
   @override
   void initState() {
     super.initState();
-    _timer = Timer.periodic(Duration(seconds: 5), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 5), (timer) {
       setState(() {
         _currentIndex = (_currentIndex + 1) % _images.length;
       });
@@ -65,7 +65,7 @@ class _ImageScreenState extends State<ImageScreen> {
           child: Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
-              padding: EdgeInsets.all(20.0),
+              padding: const EdgeInsets.all(20.0),
               child: FloatingActionButton(
                 backgroundColor: Colors.grey[400],
                 onPressed: () {
@@ -76,7 +76,7 @@ class _ImageScreenState extends State<ImageScreen> {
                     ),
                   );
                 },
-                child: Icon(Icons.arrow_forward),
+                child: const Icon(Icons.arrow_forward),
               ),
             ),
           ),
@@ -89,7 +89,7 @@ class _ImageScreenState extends State<ImageScreen> {
 class ExpandedImage extends StatelessWidget {
   final Image image;
 
-  ExpandedImage({required this.image});
+  const ExpandedImage({required this.image});
 
   @override
   Widget build(BuildContext context) {

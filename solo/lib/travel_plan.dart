@@ -34,7 +34,7 @@ class _TravelPlanPageState extends State<TravelPlanPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Travel Plan'),
+        title: const Text('Travel Plan'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -43,11 +43,11 @@ class _TravelPlanPageState extends State<TravelPlanPage> {
           children: [
             TextField(
               controller: _locationController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Location',
               ),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             DropdownButton<String>(
               value: _selectedDay,
               onChanged: (String? newValue) {
@@ -63,12 +63,16 @@ class _TravelPlanPageState extends State<TravelPlanPage> {
                 );
               }).toList(),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             ElevatedButton(
-              child: Text('Generate Travel Plan'),
+
+
+// YE kaam karo idhar
+
+              child: const Text('Generate Travel Plan'),
               onPressed: _generateTravelPlan,
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             Expanded(
               child: SingleChildScrollView(
                 child: Text(_travelPlan),

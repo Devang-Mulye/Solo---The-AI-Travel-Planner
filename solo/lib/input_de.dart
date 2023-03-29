@@ -28,7 +28,7 @@ class _TravelScreenState extends State<TravelScreen> {
       body: Stack(
         children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage('Resources/back_input.jpg'),
                 fit: BoxFit.cover,
@@ -37,7 +37,7 @@ class _TravelScreenState extends State<TravelScreen> {
           ),
           Center(
             child: Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               width: MediaQuery.of(context).size.width * 0.8,
               height: MediaQuery.of(context).size.height * 0.4,
               decoration: BoxDecoration(
@@ -48,11 +48,11 @@ class _TravelScreenState extends State<TravelScreen> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   TextField(
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Destination',
                       hintStyle: TextStyle(color: Colors.white),
                     ),
-                    style: TextStyle(
+                    style: const TextStyle(
                         color: Colors.white, fontFamily: 'Montserrat'),
                     onChanged: (value) {
                       setState(() {
@@ -136,7 +136,7 @@ class InputDeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Input Screen'),
+        title: const Text('Input Screen'),
       ),
       body: SingleChildScrollView(
         child: Center(
@@ -145,7 +145,7 @@ class InputDeScreen extends StatelessWidget {
             children: [
               Text(
                 'Destination: $dest',
-                style: TextStyle(fontSize: 24),
+                style: const TextStyle(fontSize: 24),
               ),
               SizedBox(height: 16),
               Text(
