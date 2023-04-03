@@ -92,7 +92,7 @@ class _DaySelectionScreenState extends State<DaySelectionScreen> {
                     }
                   }
                 : null,
-            child: const Text('Send Label to API'),
+            child: const Text('Generate Plan'),
           ),
         ],
       ),
