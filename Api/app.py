@@ -46,7 +46,7 @@ def find_nearest_locations(target_lat, target_long, num_locations=3):
         target_long = nearest_hotel['Longitude'].values[0]
     return nearest_locations
 
-@app.route('/travel-plan', methods=['POST'])
+@app.route('/', methods=['POST'])
 def generate_travel_plan():
     label = request.json['label']
 

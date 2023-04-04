@@ -1,6 +1,4 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'travel_plan.dart';
 
 class DaySelectionScreen extends StatefulWidget {
@@ -21,25 +19,12 @@ class _DaySelectionScreenState extends State<DaySelectionScreen> {
     _selectedLabels = widget.selectedLabels;
   }
 
-  Future<void> _sendSelectedLabelToAPI(String label) async {
-    final url = Uri.parse('http://127.0.0.1:5000/');
-    final response = await http.post(
-      url,
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({'label': label}),
-    );
-
-    if (response.statusCode == 200) {
-      print('Successfully sent label to API');
-    } else {
-      print('Failed to send label to API');
-    }
-  }
-
   void _navigateToTravelPlanPage() {
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => TravelPlanPage()),
+      MaterialPageRoute(
+        builder: (context) => TravelPlanPage(selectedLabels: _selectedLabels),
+      ),
     );
   }
 
@@ -81,20 +66,13 @@ class _DaySelectionScreenState extends State<DaySelectionScreen> {
               ),
             ),
           ),
-          ElevatedButton(
-            onPressed: _selectedLabels.isNotEmpty
-                ? () async {
-                    final labelToSend = _selectedLabels.removeAt(0);
-                    await _sendSelectedLabelToAPI(labelToSend);
-                    setState(() {});
-                    if (_selectedLabels.isEmpty) {
-                      _navigateToTravelPlanPage();
-                    }
-                  }
-                : null,
-            child: const Text('Generate Plan'),
-          ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _navigateToTravelPlanPage();
+        },
+        child: const Icon(Icons.arrow_forward),
       ),
     );
   }
