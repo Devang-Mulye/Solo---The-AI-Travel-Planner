@@ -12,11 +12,11 @@ class TravelPlanPage extends StatefulWidget {
 }
 
 class _TravelPlanPageState extends State<TravelPlanPage> {
-  int _numberOfDays = 1;
-  Map<int, List<String>> _plans = {};
+  int _numberOfDays = 4;
+  List<String> _plans = [];
 
-  Future<String> _getPlanForLabel(String label) async {
-    final url = Uri.parse('http://127.0.0.1:5000/');
+  Future<List<String>> _getPlanForLabel(String label) async {
+    final url = Uri.parse('http://127.0.0.1:5000/travel-plan');
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
@@ -25,9 +25,9 @@ class _TravelPlanPageState extends State<TravelPlanPage> {
 
     if (response.statusCode == 200) {
       final responseData = jsonDecode(response.body);
-      return responseData['result'];
+      return List<String>.from(responseData['result']);
     } else {
-      return 'Failed to get plan from API';
+      return ['Failed to get plan from API'];
     }
   }
 
@@ -37,89 +37,75 @@ class _TravelPlanPageState extends State<TravelPlanPage> {
       appBar: AppBar(
         title: const Text('Travel Plan'),
       ),
-      body: Column(
-        children: [
-          DropdownButton(
-            value: _numberOfDays,
-            onChanged: (int? newValue) {
-              setState(() {
-                _numberOfDays = newValue ?? 1;
-              });
-            },
-            items: List.generate(
-              7,
-              (index) => DropdownMenuItem(
-                value: index + 1,
-                child: Text('${index + 1} days'),
-              ),
-            ),
-          ),
-          Expanded(
-            child: FutureBuilder(
-              future: Future.wait(
-                widget.selectedLabels
-                    .map((label) => _getPlanForLabel(label))
-                    .toList(),
-              ),
-              builder: (context, AsyncSnapshot<List<String>> snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                }
+      body: FutureBuilder(
+        future: Future.wait(
+          widget.selectedLabels
+              .map((label) => _getPlanForLabel(label))
+              .toList(),
+        ),
+        builder: (context, AsyncSnapshot<List<List<String>>> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
 
-                if (snapshot.hasError) {
-                  return const Center(child: Text('Error fetching plans'));
-                }
+          if (snapshot.hasError) {
+            return const Center(child: Text('Error fetching plans'));
+          }
 
-                final plans = snapshot.data ?? [];
+          // Concatenate all the plans into a single list
+          _plans = snapshot.data!.expand((plans) => plans).toList();
 
-                // Split plans into separate days
-                _plans = {};
-                for (var i = 0; i < plans.length; i++) {
-                  final dayNumber = i % _numberOfDays;
-                  _plans[dayNumber] = _plans[dayNumber] ?? [];
-                  _plans[dayNumber]!.add(plans[i]);
-                }
+          // Split plans into separate days
+          // Split plans into separate days
+final plansPerDay = (_plans.length / _numberOfDays).ceil(); 
+final splitPlans = List.generate(_numberOfDays - 1, (dayIndex) {
+  final startIndex = dayIndex * plansPerDay;
+  final endIndex = startIndex + plansPerDay;
+  return _plans.sublist(startIndex, endIndex);
+});
+// Add the remaining plans to the last day
+final remainingPlans = _plans.sublist(plansPerDay * (_numberOfDays - 1));
+splitPlans.add(remainingPlans); 
 
-                return ListView.builder(
-                  itemCount: _plans.length,
-                  itemBuilder: (context, index) {
-                    final dayNumber = index + 1;
-                    final plansForDay = _plans[dayNumber] ?? [];
 
-                    return Card(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              'Day $dayNumber',
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18.0,
-                              ),
-                            ),
-                          ),
-                          Divider(),
-                          ListView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: plansForDay.length,
-                            itemBuilder: (context, index) {
-                              return ListTile(
-                                title: Text(plansForDay[index]),
-                              );
-                            },
-                          ),
-                        ],
+          return ListView.separated(
+            itemCount: _numberOfDays,
+            separatorBuilder: (context, index) => Divider(),
+            itemBuilder: (context, index) {
+              final dayNumber = index + 1;
+              final plansForDay = splitPlans[index];
+
+              return Card(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        'Day $dayNumber',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18.0,
+                        ),
                       ),
-                    );
-                  },
-                );
-              },
-            ),
-          ),
-        ],
+                    ),
+                    Divider(),
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: plansForDay.length,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          title: Text(plansForDay[index]),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
+        },
       ),
     );
   }

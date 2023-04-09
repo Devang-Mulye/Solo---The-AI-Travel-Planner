@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Hotel Vacancy Prediction</title>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+	<h1>Hotel Vacancy Prediction</h1>
+	<p>Predicted Vacancy Rate: <span id="prediction"></span></p>
+	<script>
+		$(document).ready(function() {
+			$.ajax({
+				type: 'GET',
+				url: '/predict',
+				success: function(response) {
+					$('#prediction').text(response.prediction);
+				}
+			});
+		});
+	</script>
+</body>
+</html>
