@@ -17,7 +17,7 @@ class _TravelPlanPageState extends State<TravelPlanPage> {
   List<String> _plans = [];
 
   Future<List<String>> _getPlanForLabel(String label) async {
-    final url = Uri.parse('http://127.0.0.1:5000/travel-plan');
+    final url = Uri.parse('https://solo-travel-planner.onrender.com/travel-plan');
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},

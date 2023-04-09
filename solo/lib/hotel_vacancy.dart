@@ -13,7 +13,7 @@ class _MyHomePageState extends State<HotelVacancy> {
   double prediction = 0;
 
   Future<void> _getPrediction() async {
-    final response = await http.get(Uri.parse('http://localhost:5000/predict_hotel_vacancy'));
+    final response = await http.get(Uri.parse('https://solo-travel-planner.onrender.com/predict_hotel_vacancy'));
     if (response.statusCode == 200) {
       setState(() {
         prediction = double.parse(response.body);
