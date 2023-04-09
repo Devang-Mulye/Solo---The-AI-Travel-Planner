@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'flight_prediction.dart';
+import 'hotel_prize.dart';
 import 'hotel_vacancy.dart';
 
 class ModelSelection extends StatelessWidget {
@@ -41,7 +42,7 @@ class ModelSelection extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => DummyPage('Hotel Price'),
+                    builder: (context) => HotelPricePredictor(),
                   ),
                 );
               },

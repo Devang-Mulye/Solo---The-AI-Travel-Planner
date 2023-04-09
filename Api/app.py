@@ -9,13 +9,9 @@ from sklearn.preprocessing import MinMaxScaler
 
 app = Flask(__name__)
 
-# Load the dataset containing location names and their corresponding latitude and longitude values into a pandas DataFrame
+hotelDataset = pd.read_excel("Datasets/hotels.xlsx")
 attractions_data = pd.read_csv('Datasets/attractions_mumbai.csv')
-
-# Load the dataset containing hotel names and their corresponding latitude and longitude values into a pandas DataFrame
 hotels_data = pd.read_csv('Datasets/hotels_mumbai.csv')
-
-# Load the data
 df = pd.read_csv('Datasets/hotel_booking.csv')
 
 # Create num_rooms_available column
@@ -135,7 +131,7 @@ def generate_travel_plan():
 
 
 #Hotel vacancy
-@app.route('/predicthotelvacancy')
+@app.route('/predict_hotel_vacancy')
 def home():
     # Make a prediction
     prediction = model.predict(X_test)
@@ -143,6 +139,33 @@ def home():
     prediction_list = prediction.tolist()
     # Print only the first prediction value
     return str(prediction_list[0]*100)
+
+#Hotel Prize
+# Define a route for the hotel price predictor
+@app.route('/predict_hotel_price')
+def predict_price():
+    # Get the hotel name from the request parameters
+    hotel_name = request.args.get('hotel_name')
+    
+    # Get the row for the specified hotel name
+    hotel_data = hotelDataset[hotelDataset['Hotel_name'] == hotel_name]
+
+    # Check if any data was found for the specified hotel name
+    if len(hotel_data) == 0:
+        return jsonify({'error': f"No data found for {hotel_name}."})
+    else:
+        # Extract the features for the specified hotel name
+        features = hotel_data[['Hotel star rating', 'Distance', 'Rooms', 'Squares']]
+
+        # Load the trained model
+        regressor = LinearRegression()
+    regressor.fit(features, hotel_data['Price(BAM)'])
+
+    # Predict the price for the specified hotel
+    predicted_price = regressor.predict(features)
+
+    return jsonify({'predicted_price': predicted_price[0]}) 
+
 
 if __name__ == '__main__':
     app.run(debug=True)
