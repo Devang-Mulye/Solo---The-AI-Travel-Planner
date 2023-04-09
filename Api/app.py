@@ -1,18 +1,69 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
+from flask_cors import cross_origin
+
 import pandas as pd
 import numpy as np
+import pickle
 
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error
 from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import LabelEncoder
 
 app = Flask(__name__)
 
+#loading datasets
 hotelDataset = pd.read_excel("Datasets/hotels.xlsx")
 attractions_data = pd.read_csv('Datasets/attractions_mumbai.csv')
 hotels_data = pd.read_csv('Datasets/hotels_mumbai.csv')
 df = pd.read_csv('Datasets/hotel_booking.csv')
+
+#model for flight
+model = pickle.load(open("Trained_Models/c2_flight_rf.pkl", "rb"))
+
+# create encoder for categorical features
+airline_encoder = LabelEncoder()
+source_encoder = LabelEncoder()
+destination_encoder = LabelEncoder()
+
+# helper function to extract hour and minute from datetime
+def extract_time(date_time):
+    hour = int(pd.to_datetime(date_time, format="%Y-%m-%dT%H:%M").hour)
+    minute = int(pd.to_datetime(date_time, format="%Y-%m-%dT%H:%M").minute)
+    return hour, minute
+
+# helper function to preprocess request data
+def preprocess_data(data):
+    # extract date and time features
+    journey_day, journey_month = extract_time(data['Dep_Time'])
+    dep_hour, dep_min = extract_time(data['Dep_Time'])
+    arrival_hour, arrival_min = extract_time(data['Arrival_Time'])
+    duration_hour = abs(arrival_hour - dep_hour)
+    duration_min = abs(arrival_min - dep_min)
+
+    # convert categorical features into numerical features
+    airline = airline_encoder.transform([data['airline']])
+    source = source_encoder.transform([data['Source']])
+    destination = destination_encoder.transform([data['Destination']])
+
+    # create input features as a DataFrame
+    input_features = pd.DataFrame({
+        'Journey_day': journey_day,
+        'Journey_month': journey_month,
+        'Dep_hour': dep_hour,
+        'Dep_min': dep_min,
+        'Arrival_hour': arrival_hour,
+        'Arrival_min': arrival_min,
+        'Duration_hour': duration_hour,
+        'Duration_min': duration_min,
+        'Total_Stops': int(data['stops']),
+        'Airline': airline,
+        'Source': source,
+        'Destination': destination
+    })
+
+    return input_features
 
 # Create num_rooms_available column
 df['num_rooms_available'] = df['reserved_room_type'].apply(lambda x: ord('G') - ord(x) + 1)
@@ -164,7 +215,24 @@ def predict_price():
     # Predict the price for the specified hotel
     predicted_price = regressor.predict(features)
 
-    return jsonify({'predicted_price': predicted_price[0]}) 
+    return jsonify({'predicted_price': predicted_price[0]})
+
+@app.route("/predict_flight_price", methods=["POST"])
+@cross_origin()
+def predict():
+    # parse JSON request data
+    request_data = request.get_json()
+    # preprocess request data
+    input_data = preprocess_data(request_data)
+    # make prediction using the model
+    prediction = model.predict(input_data)
+    # convert prediction into a human-readable format
+    output = round(prediction[0], 2)
+
+    # create JSON response
+    response = {'flight_price': output}
+
+    return jsonify(response)
 
 
 if __name__ == '__main__':
