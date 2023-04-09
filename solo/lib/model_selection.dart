@@ -30,7 +30,7 @@ class ModelSelection extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => DummyPage('Hotel Vacancy'),
+                    builder: (context) => HotelVacancy(),
                   ),
                 );
               },

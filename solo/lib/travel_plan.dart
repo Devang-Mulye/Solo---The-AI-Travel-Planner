@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:solo/model_selection.dart';
 
 class TravelPlanPage extends StatefulWidget {
   final List<String> selectedLabels;
@@ -56,17 +57,15 @@ class _TravelPlanPageState extends State<TravelPlanPage> {
           _plans = snapshot.data!.expand((plans) => plans).toList();
 
           // Split plans into separate days
-          // Split plans into separate days
-final plansPerDay = (_plans.length / _numberOfDays).ceil(); 
-final splitPlans = List.generate(_numberOfDays - 1, (dayIndex) {
-  final startIndex = dayIndex * plansPerDay;
-  final endIndex = startIndex + plansPerDay;
-  return _plans.sublist(startIndex, endIndex);
-});
-// Add the remaining plans to the last day
-final remainingPlans = _plans.sublist(plansPerDay * (_numberOfDays - 1));
-splitPlans.add(remainingPlans); 
-
+          final plansPerDay = (_plans.length / _numberOfDays).ceil();
+          final splitPlans = List.generate(_numberOfDays - 1, (dayIndex) {
+            final startIndex = dayIndex * plansPerDay;
+            final endIndex = startIndex + plansPerDay;
+            return _plans.sublist(startIndex, endIndex);
+          });
+          // Add the remaining plans to the last day
+          final remainingPlans = _plans.sublist(plansPerDay * (_numberOfDays - 1));
+          splitPlans.add(remainingPlans);
 
           return ListView.separated(
             itemCount: _numberOfDays,
@@ -107,6 +106,19 @@ splitPlans.add(remainingPlans);
           );
         },
       ),
+      floatingActionButton: ElevatedButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ModelSelection(),
+            ),
+          );
+        },
+        child: const Text('Next Page'),
+      ),
     );
   }
 }
+
+
