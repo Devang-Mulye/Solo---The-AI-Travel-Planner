@@ -12,7 +12,7 @@ class _HotelPricePredictorState extends State<HotelPricePredictor> {
   String _predictedPrice = '';
 
   void _predictPrice() async {
-    String url = 'http://127.0.0.1:5000/predict_hotel_price';
+    String url = 'https://solo-travel-planner.onrender.com/predict_hotel_price';
     Map<String, String> queryParams = {'hotel_name': _hotelNameController.text};
     var uri = Uri.parse(url).replace(queryParameters: queryParams);
     var response = await http.get(uri);

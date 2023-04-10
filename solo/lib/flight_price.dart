@@ -11,7 +11,7 @@ class FlightPricePredictor extends StatefulWidget {
 
 class _FlightPricePredictorState extends State<FlightPricePredictor> {
   final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
-  final String _apiUrl = 'http://localhost:5000/predict_flight_price';
+  final String _apiUrl = 'https://solo-travel-planner.onrender.com/predict_flight_price';
   String _result = '';
 
   void _submitForm() async {
