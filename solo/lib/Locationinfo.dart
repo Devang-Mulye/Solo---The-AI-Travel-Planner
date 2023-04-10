@@ -1,12 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:solo/display_attractions.dart';
-
-void main() {
-  runApp(MaterialApp(
-    title: 'Travel App',
-    home: TravelScreen(),
-  ));
-}
+import 'display_attractions.dart';
 
 class TravelScreen extends StatefulWidget {
   @override
@@ -18,6 +11,15 @@ class _TravelScreenState extends State<TravelScreen> {
   int days = 1;
 
   final List<int> _daysList = List<int>.generate(31, (index) => index + 1);
+
+  void _navigateToAttractionsScreen(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => AttractionsScreen(maxSelectedImages: days,),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -107,12 +109,7 @@ class _TravelScreenState extends State<TravelScreen> {
                   const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => AttractionsScreen(),
-                        ),
-                      );
+                      _navigateToAttractionsScreen(context);
                     },
                     child: const Text('Next'),
                   ),
@@ -121,41 +118,6 @@ class _TravelScreenState extends State<TravelScreen> {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class InputDeScreen extends StatelessWidget {
-  final String dest;
-  final int days;
-
-  InputDeScreen({required this.dest, required this.days});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Input Screen'),
-      ),
-      body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Destination: $dest',
-                style: const TextStyle(fontSize: 24),
-              ),
-              SizedBox(height: 16),
-              Text(
-                'Days: $days',
-                style: TextStyle(fontSize: 24),
-              ),
-              SizedBox(height: 16),
-            ],
-          ),
-        ),
       ),
     );
   }

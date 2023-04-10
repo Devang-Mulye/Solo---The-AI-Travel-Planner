@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'single_attraction.dart';
+import 'Locationinfo.dart';
 
 class AttractionsScreen extends StatefulWidget {
+  final int maxSelectedImages;
+
+  AttractionsScreen({required this.maxSelectedImages});
+
   @override
   _AttractionsScreenState createState() => _AttractionsScreenState();
 }
@@ -20,21 +25,25 @@ class _AttractionsScreenState extends State<AttractionsScreen> {
     'Gateway Of India Mumbai',
     'Marine Drive',
   ];
-  
+
   final Set<int> _selectedImages = {};
-  final int _maxSelectedImages = 4;
-  List<String> selectedLabels =
-      []; // Add this line to initialize selectedLabels
+  late final int _maxSelectedImages;
+  List<String> selectedLabels = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _maxSelectedImages = widget.maxSelectedImages;
+  }
 
   void _selectImage(int index) {
     setState(() {
       if (_selectedImages.contains(index)) {
         _selectedImages.remove(index);
-        selectedLabels
-            .remove(imageLabels[index]); // remove label from selectedLabels
+        selectedLabels.remove(imageLabels[index]);
       } else if (_selectedImages.length < _maxSelectedImages) {
         _selectedImages.add(index);
-        selectedLabels.add(imageLabels[index]); // add label to selectedLabels
+        selectedLabels.add(imageLabels[index]);
       }
     });
   }
