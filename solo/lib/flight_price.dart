@@ -11,7 +11,7 @@ class FlightPricePredictor extends StatefulWidget {
 
 class _FlightPricePredictorState extends State<FlightPricePredictor> {
   final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
-  final String _apiUrl = 'https://solo-travel-planner.onrender.com/predict_flight_price';
+  final String _apiUrl = 'http://localhost:5000/predict_flight_price';
   String _result = '';
 
   void _submitForm() async {
@@ -35,55 +35,87 @@ class _FlightPricePredictorState extends State<FlightPricePredictor> {
         title: Text('Flight Price Predictor'),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            FormBuilder(
-              key: _formKey,
-              child: Column(
-                children: [
-                  FormBuilderTextField(
-                    name: 'airline',
-                    decoration: InputDecoration(labelText: 'Airline'),
-                    validator: FormBuilderValidators.required(),
-                  ),
-                  FormBuilderTextField(
-                    name: 'Source',
-                    decoration: InputDecoration(labelText: 'Source'),
-                    validator: FormBuilderValidators.required(),
-                  ),
-                  FormBuilderTextField(
-                    name: 'Destination',
-                    decoration: InputDecoration(labelText: 'Destination'),
-                    validator: FormBuilderValidators.required(),
-                  ),
-                  FormBuilderTextField(
-                    name: 'Dep_Time',
-                    decoration: InputDecoration(labelText: 'Departure Time'),
-                    validator: FormBuilderValidators.required(),
-                  ),
-                  FormBuilderTextField(
-                    name: 'Arrival_Time',
-                    decoration: InputDecoration(labelText: 'Arrival Time'),
-                    validator: FormBuilderValidators.required(),
-                  ),
-                  FormBuilderTextField(
-                    name: 'stops',
-                    decoration: InputDecoration(labelText: 'Number of Stops'),
-                    validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required(),
-                      FormBuilderValidators.numeric(),
-                    ]),
-                  ),
-                  ElevatedButton(
-                    onPressed: _submitForm,
-                    child: Text('Predict'),
-                  ),
-                ],
+        child: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              FormBuilder(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    FormBuilderTextField(
+                      name: 'airline',
+                      decoration: InputDecoration(
+                        labelText: 'Airline',
+                        border: OutlineInputBorder(),
+                      ),
+                      validator: FormBuilderValidators.required(),
+                    ),
+                    SizedBox(height: 16.0),
+                    FormBuilderTextField(
+                      name: 'Source',
+                      decoration: InputDecoration(
+                        labelText: 'Source',
+                        border: OutlineInputBorder(),
+                      ),
+                      validator: FormBuilderValidators.required(),
+                    ),
+                    SizedBox(height: 16.0),
+                    FormBuilderTextField(
+                      name: 'Destination',
+                      decoration: InputDecoration(
+                        labelText: 'Destination',
+                        border: OutlineInputBorder(),
+                      ),
+                      validator: FormBuilderValidators.required(),
+                    ),
+                    SizedBox(height: 16.0),
+                    FormBuilderTextField(
+                      name: 'Dep_Time',
+                      decoration: InputDecoration(
+                        labelText: 'Departure Time',
+                        border: OutlineInputBorder(),
+                      ),
+                      validator: FormBuilderValidators.required(),
+                    ),
+                    SizedBox(height: 16.0),
+                    FormBuilderTextField(
+                      name: 'Arrival_Time',
+                      decoration: InputDecoration(
+                        labelText: 'Arrival Time',
+                        border: OutlineInputBorder(),
+                      ),
+                      validator: FormBuilderValidators.required(),
+                    ),
+                    SizedBox(height: 16.0),
+                    FormBuilderTextField(
+                      name: 'stops',
+                      decoration: InputDecoration(
+                        labelText: 'Number of Stops',
+                        border: OutlineInputBorder(),
+                      ),
+                      validator: FormBuilderValidators.compose([
+                        FormBuilderValidators.required(),
+                        FormBuilderValidators.numeric(),
+                      ]),
+                    ),
+                    SizedBox(height: 32.0),
+                    ElevatedButton(
+                      onPressed: _submitForm,
+                      child: Text('Predict'),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: 20),
-            Text(_result),
-          ],
+              SizedBox(height: 32.0),
+              Text(
+                _result,
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 20.0),
+              ),
+            ],
+          ),
         ),
       ),
     );
