@@ -17,6 +17,28 @@ class _AttractionsScreenState extends State<AttractionsScreen> {
     'Resources/Elephanta-caves.jpg',
     'Resources/Gateway_of_India.jpg',
     'Resources/Marine-Drive.jpg',
+    
+
+    'Resources/Afghan-Church.jpeg',
+    'Resources/Bandra-Fort.jpeg',
+    'Resources/Essel-World.jpeg',
+    'Resources/Wankhede-Stadium.jpeg',
+    'Resources/Girgaon-Chowpathi.jpeg',
+    'Resources/Global-Vipassana.jpeg',
+    'Resources/Haji-Ali-Dargah.jpeg',
+    'Resources/ISKCON-Temple.jpeg',
+    'Resources/Kidzania.jpeg',
+    'Resources/Mahim-Church.jpeg',
+    'Resources/Manori-Beach.jpeg',
+    'Resources/Mumbadevi-temple.jpeg',
+    'Resources/Mumbai-Beaches.jpeg',
+    'Resources/Nehru-Planetarium.jpeg',
+    'Resources/Priyadarshini-Park.png',
+    'Resources/Shree-Siddhivinayak-Temple.jpeg',
+    'Resources/Sion-Fort.jpeg',
+    'Resources/Vasai-Fort.jpeg',
+    'Resources/VJTI-Udyaan.jpeg',
+    'Resources/Hanging-Gardens.jpeg',
   ];
 
   final List<String> imageLabels = [
@@ -24,7 +46,28 @@ class _AttractionsScreenState extends State<AttractionsScreen> {
     'Elephanta Caves',
     'Gateway Of India Mumbai',
     'Marine Drive',
+    'Afghan-Church',
+    'Bandra-Fort',
+    'Essel-World',
+    'Wankhede-Stadium',
+    'Girgaon-Chowpathi',
+    'Global-Vipassana',
+    'Haji-Ali-Dargah',
+    'ISKCON-Temple',
+    'Kidzania',
+    'Mahim-Church',
+    'Manori-Beach',
+    'Mumbadevi-temple',
+    'Mumbai-Beaches',
+    'Nehru-Planetarium',
+    'Priyadarshini-Park',
+    'Shree-Siddhivinayak-Temple'
+    'Sion-Fort',
+    'Vasai-Fort',
+    'VJTI-Udyaan',
+    'Hanging-Gardens',
   ];
+  
 
   final Set<int> _selectedImages = {};
   late final int _maxSelectedImages;
