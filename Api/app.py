@@ -62,7 +62,6 @@ def preprocess_data(data):
         'Source': source,
         'Destination': destination
     })
-
     return input_features
 
 # Create num_rooms_available column
@@ -180,7 +179,6 @@ def generate_travel_plan():
     # Return the travel plan as a JSON response
     return jsonify({'result': results})
 
-
 #Hotel vacancy
 @app.route('/predict_hotel_vacancy')
 def home():
@@ -191,7 +189,8 @@ def home():
     # Print only the first prediction value
     return str(prediction_list[0]*100)
 
-#Hotel Prize
+
+#Hotel Price
 # Define a route for the hotel price predictor
 @app.route('/predict_hotel_price')
 def predict_price():
@@ -217,6 +216,7 @@ def predict_price():
 
     return jsonify({'predicted_price': predicted_price[0]})
 
+
 @app.route("/predict_flight_price", methods=["POST"])
 @cross_origin()
 def predict():
@@ -228,10 +228,8 @@ def predict():
     prediction = model.predict(input_data)
     # convert prediction into a human-readable format
     output = round(prediction[0], 2)
-
     # create JSON response
     response = {'flight_price': output}
-
     return jsonify(response)
 
 

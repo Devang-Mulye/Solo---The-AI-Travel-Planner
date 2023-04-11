@@ -13,32 +13,31 @@ class AttractionsScreen extends StatefulWidget {
 
 class _AttractionsScreenState extends State<AttractionsScreen> {
   final List<String> imageList = [
-    'Resources/Chhatrapati-Shivaji-Terminus.jpg',
-    'Resources/Elephanta-caves.jpg',
-    'Resources/Gateway_of_India.jpg',
-    'Resources/Marine-Drive.jpg',
-    
+    'Resources/Attractions/Chhatrapati-Shivaji-Terminus.jpg',
+    'Resources/Attractions/Elephanta-caves.jpg',
+    'Resources/Attractions/Gateway_of_India.jpg',
+    'Resources/Attractions/Marine-Drive.jpg',
 
-    'Resources/Afghan-Church.jpeg',
-    'Resources/Bandra-Fort.jpeg',
-    'Resources/Essel-World.jpeg',
+    'Resources/Attractions/Afghan-Church.jpeg',
+    'Resources/Attractions/Bandra-Fort.jpeg',
+    'Resources/Attractions/Essel-World.jpeg',
     // 'Resources/Wankhede-Stadium.jpeg',
-    'Resources/Girgaon-Chowpathi.jpeg',
-    'Resources/Global-Vipassana.jpeg',
-    'Resources/Haji-Ali-Dargah.jpeg',
-    'Resources/ISKCON-Temple.jpeg',
-    'Resources/Kidzania.jpeg',
-    'Resources/Mahim-Church.jpeg',
-    'Resources/Manori-Beach.jpeg',
-    'Resources/Mumbadevi-temple.jpeg',
-    'Resources/Mumbai-Beaches.jpeg',
-    'Resources/Nehru-Planetarium.jpeg',
-    'Resources/Priyadarshini-Park.png',
-    'Resources/Shree-Siddhivinayak-Temple.jpeg',
+    'Resources/Attractions/Girgaon-Chowpathi.jpeg',
+    'Resources/Attractions/Global-Vipassana.jpeg',
+    'Resources/Attractions/Haji-Ali-Dargah.jpeg',
+    'Resources/Attractions/ISKCON-Temple.jpeg',
+    'Resources/Attractions/Kidzania.jpeg',
+    'Resources/Attractions/Mahim-Church.jpeg',
+    'Resources/Attractions/Manori-Beach.jpeg',
+    'Resources/Attractions/Mumbadevi-temple.jpeg',
+    'Resources/Attractions/Mumbai-Beaches.jpeg',
+    'Resources/Attractions/Nehru-Planetarium.jpeg',
+    'Resources/Attractions/Priyadarshini-Park.png',
+    'Resources/Attractions/Shree-Siddhivinayak-Temple.jpeg',
     // 'Resources/Sion-Fort.jpeg',
-    'Resources/Vasai-Fort.jpeg',
-    'Resources/VJTI-Udyaan.jpeg',
-    'Resources/Hanging-Gardens.jpeg',
+    'Resources/Attractions/Vasai-Fort.jpeg',
+    'Resources/Attractions/VJTI-Udyaan.jpeg',
+    'Resources/Attractions/Hanging-Gardens.jpeg',
   ];
 
   final List<String> imageLabels = [
@@ -62,12 +61,11 @@ class _AttractionsScreenState extends State<AttractionsScreen> {
     'Nehru planetarium',
     'Priyadarshini Park',
     'Shree Siddhivinayak Temple'
-    // 'Sion-Fort',
-    'Vasai Fort',
+        // 'Sion-Fort',
+        'Vasai Fort',
     'Veermata Jijabai Bhosale Udyan And Zoo',
     'Horniman Circle Garden',
   ];
-  
 
   final Set<int> _selectedImages = {};
   late final int _maxSelectedImages;

@@ -16,7 +16,9 @@ class _TravelScreenState extends State<TravelScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => AttractionsScreen(maxSelectedImages: days,),
+        builder: (context) => AttractionsScreen(
+          maxSelectedImages: days,
+        ),
       ),
     );
   }
