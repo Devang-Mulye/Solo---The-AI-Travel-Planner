@@ -13,7 +13,7 @@ class TravelPlanPage extends StatefulWidget {
 }
 
 class _TravelPlanPageState extends State<TravelPlanPage> {
-  int _numberOfDays = 4;
+  int _numberOfDays = 0;
   List<String> _plans = [];
 
   Future<List<String>> _getPlanForLabel(String label) async {
@@ -34,6 +34,8 @@ class _TravelPlanPageState extends State<TravelPlanPage> {
 
   @override
   Widget build(BuildContext context) {
+    _numberOfDays = (widget.selectedLabels.length).ceil(); // assuming 2 plans per day
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Travel Plan'),
@@ -120,5 +122,3 @@ class _TravelPlanPageState extends State<TravelPlanPage> {
     );
   }
 }
-
-
