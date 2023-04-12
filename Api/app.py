@@ -19,6 +19,12 @@ attractions_data = pd.read_csv('Datasets/attractions_mumbai.csv')
 hotels_data = pd.read_csv('Datasets/hotels_mumbai.csv')
 df = pd.read_csv('Datasets/hotel_booking.csv')
 
+
+
+
+
+
+#Flight ka background process
 #model for flight
 model = pickle.load(open("Trained_Models/c2_flight_rf.pkl", "rb"))
 
@@ -64,6 +70,11 @@ def preprocess_data(data):
     })
     return input_features
 
+
+
+
+
+#Hotel vacancy ka background code
 # Create num_rooms_available column
 df['num_rooms_available'] = df['reserved_room_type'].apply(lambda x: ord('G') - ord(x) + 1)
 
@@ -106,6 +117,12 @@ y_test2 = np.where(np.isnan(y_test), 0.0, y_test)
 model = LinearRegression()
 model.fit(X_train, y_train2)
 
+
+
+
+
+
+#Suggestion of attractions and hotels
 def get_attraction_lat_long(location):
     row = attractions_data[attractions_data['Attraction'] == location]
     if not row.empty:
@@ -142,7 +159,16 @@ def find_nearest_locations(target_lat, target_long, num_locations=3):
         target_long = nearest_hotel['Longitude'].values[0]
     return nearest_locations
 
-#Travel-Plan
+
+
+
+
+
+
+
+
+
+#Travel-Plan ka connection
 @app.route('/travel-plan', methods=['POST'])
 def generate_travel_plan():
     data = request.get_json()
@@ -179,7 +205,11 @@ def generate_travel_plan():
     # Return the travel plan as a JSON response
     return jsonify({'result': results})
 
-#Hotel vacancy
+
+
+
+
+#Hotel vacancy ka code jo connect karega
 @app.route('/predict_hotel_vacancy')
 def home():
     # Make a prediction
@@ -190,7 +220,11 @@ def home():
     return str(prediction_list[0]*100)
 
 
-#Hotel Price
+
+
+
+
+#Hotel Price ka code jo connect karega
 # Define a route for the hotel price predictor
 @app.route('/predict_hotel_price')
 def predict_price():
@@ -217,6 +251,9 @@ def predict_price():
     return jsonify({'predicted_price': predicted_price[0]})
 
 
+
+
+#Flight price ka main code jo connect hota hai
 @app.route("/predict_flight_price", methods=["POST"])
 @cross_origin()
 def predict():
