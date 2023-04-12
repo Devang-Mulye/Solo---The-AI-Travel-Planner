@@ -106,40 +106,89 @@ class _AttractionsScreenState extends State<AttractionsScreen> {
         onPressed: _navigateToNextPage,
         child: const Icon(Icons.arrow_forward),
       ),
-      body: GridView.builder(
-        itemCount: imageList.length,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          mainAxisSpacing: 16,
-          crossAxisSpacing: 16,
-        ),
-        itemBuilder: (BuildContext context, int index) {
-          final isSelected = _selectedImages.contains(index);
-          return InkWell(
-            onTap: () {
-              _selectImage(index);
-            },
-            child: Stack(
-              children: [
-                AnimatedOpacity(
-                  duration: const Duration(milliseconds: 300),
-                  opacity: isSelected ? 0.5 : 1.0,
-                  child: Image.asset(
-                    imageList[index],
-                    height: 150,
-                    width: 150,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                if (isSelected)
-                  const Positioned.fill(
-                    child: Icon(Icons.check, color: Colors.blue),
-                  ),
-              ],
+      body:GridView.builder(
+  itemCount: imageList.length,
+  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+    crossAxisCount: 2,
+    mainAxisSpacing: 16,
+    crossAxisSpacing: 16,
+  ),
+  itemBuilder: (BuildContext context, int index) {
+    final isSelected = _selectedImages.contains(index);
+    return InkWell(
+      onTap: () {
+        _selectImage(index);
+      },
+      child: Stack(
+        children: [
+          AnimatedOpacity(
+            duration: const Duration(milliseconds: 300),
+            opacity: isSelected ? 0.5 : 1.0,
+            child: Image.asset(
+              imageList[index],
+              height: 150,
+              width: 150,
+              fit: BoxFit.cover,
             ),
-          );
-        },
+          ),
+          if (isSelected)
+            const Positioned.fill(
+              child: Icon(Icons.check, color: Colors.blue),
+            ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              width: double.infinity,
+              color: Colors.black.withOpacity(0.5),
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+              child: Text(
+                imageLabels[index],
+                style: const TextStyle(color: Colors.white),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+        ],
       ),
+    );
+  },
+)
+
+      // GridView.builder(
+      //   itemCount: imageList.length,
+      //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+      //     crossAxisCount: 2,
+      //     mainAxisSpacing: 16,
+      //     crossAxisSpacing: 16,
+      //   ),
+      //   itemBuilder: (BuildContext context, int index) {
+      //     final isSelected = _selectedImages.contains(index);
+      //     return InkWell(
+      //       onTap: () {
+      //         _selectImage(index);
+      //       },
+      //       child: Stack(
+      //         children: [
+      //           AnimatedOpacity(
+      //             duration: const Duration(milliseconds: 300),
+      //             opacity: isSelected ? 0.5 : 1.0,
+      //             child: Image.asset(
+      //               imageList[index],
+      //               height: 150,
+      //               width: 150,
+      //               fit: BoxFit.cover,
+      //             ),
+      //           ),
+      //           if (isSelected)
+      //             const Positioned.fill(
+      //               child: Icon(Icons.check, color: Colors.blue),
+      //             ),
+      //         ],
+      //       ),
+      //     );
+      //   },
+      // ),
+      
     );
   }
 }
